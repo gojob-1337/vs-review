@@ -1,0 +1,16 @@
+{
+  "name": "extension",
+  "version": "1.0.0",
+  "main": "out/index.js",
+  "engines": {
+    "vscode": "^1.33.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode": "^1.1.33"
+  }
+}
