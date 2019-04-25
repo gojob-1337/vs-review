@@ -1,0 +1,90 @@
+import Axios from 'axios';
+import { inspect } from 'util';
+
+'/merge_requests/900/discussions';
+'/projects/5507129/repository/commits/472b3781420bffb08caffc75b4c4aaa265d6c80f/discussions';
+
+const gitBranch = 'add-feature-flipping';
+const gitRemote = 'git@gitlab.com:gojob/api.git';
+
+const instance = Axios.create({
+  baseURL: 'https://gitlab.com/api/v4',
+  headers: { 'PRIVATE-TOKEN': 'sEYanNr1Mtn7C_iC2GGz' },
+  params: { per_page: 100 },
+});
+
+function log(data: any) {
+  console.log(inspect(data, false, 5, true));
+}
+
+(async () => {
+  const projects = await getProjectsOfUser();
+
+  const currentProject = projects.find(isMatchingOrigin(gitRemote));
+
+  const mergeRequests = await getMergeRequestsFromBranch(currentProject.id, gitBranch);
+
+  const openedMergeRequest = mergeRequests.length > 1 ? mergeRequests.find(mr => mr.state === 'opened') : mergeRequests[0];
+
+  const discussions = await getDiscussionsOfMergeRequest(currentProject.id, openedMergeRequest.iid);
+
+  log(discussions.length);
+
+  const condensed = discussions.map(d => {
+    return {
+      id: d.id,
+      notes: d.notes.map(n => ({
+        id: n.id,
+        body: n.body,
+        position: n.position,
+        author: n.author.name,
+      })),
+    };
+  });
+
+  log(condensed);
+})();
+
+function isMatchingOrigin(origin: string) {
+  return project => {
+    return project.ssh_url_to_repo === origin || project.http_url_to_repo === origin;
+  };
+}
+
+function getMergeRequestsFromBranch(projectId: string, branch: string) {
+  return instance
+    .get(`/projects/${projectId}/merge_requests?source_branch=${branch}`)
+    .catch(console.error)
+    .then(res => res && res.data);
+}
+
+function getProjectsOfUser() {
+  return instance
+    .get('/projects', { params: { membership: true } })
+    .catch(console.error)
+    .then(res => res && res.data);
+}
+
+function getBranchesOfProject(projectId: string) {
+  return instance
+    .get(`/projects/${projectId}/repository/branches`)
+    .catch(console.error)
+    .then(res => res && res.data);
+}
+
+function getDiscussionsOfMergeRequest(projectId: string, mrIid: string) {
+  return instance
+    .get(`/projects/${projectId}/merge_requests/${mrIid}/discussions`)
+    .catch(console.error)
+    .then(res => res && res.data);
+}
+
+// const proj = gitlab.Projects(10).get();
+
+// proj.access_requests.get();
+
+// function Projects(id: string) {
+//   return {
+//     access_requests
+//   };
+// }
