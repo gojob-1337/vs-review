@@ -12,5 +12,10 @@
   },
   "dependencies": {
     "vscode": "^1.1.33"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2"
   }
 }
