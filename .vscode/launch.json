@@ -6,6 +6,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "node",
+      "name": "vscode-jest-tests",
+      "request": "launch",
+      "program": "${cwd}/extension/node_modules/jest/bin/jest",
+      "args": [
+        "--runInBand"
+      ],
+      "cwd": "${workspaceFolder}/extension",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
       "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",

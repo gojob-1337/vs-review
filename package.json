@@ -29,5 +29,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "lerna": "^3.13.4"
   }
 }

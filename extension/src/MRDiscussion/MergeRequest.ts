@@ -1,7 +1,7 @@
 import { GitlabDiscussion } from './GitlabDiscussion';
 
 export class MergeRequest {
-  discussions: any[];
+  discussions: { id: string; messages: { id: number; content: string; author: string }[] }[];
 
   static create(payload: GitlabDiscussion[]): MergeRequest {
     const mergeRequest = new MergeRequest();

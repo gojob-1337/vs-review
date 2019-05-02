@@ -15,5 +15,5 @@ const useCommand = () => {
 export function Root() {
   const command = useCommand();
 
-  return <div>hello {command.name}</div>;
+  return <div>hello {command.name} </div>;
 }
