@@ -1,8 +1,9 @@
 import { MergeRequest } from './MergeRequest';
+import { GitlabDiscussion } from './GitlabDiscussion';
 
 describe('MergeRequest', () => {
   describe('creation', () => {
-    const singleNoteDiscussion = {
+    const singleNoteDiscussion: GitlabDiscussion = {
       id: 'b2556e866f7d827f40d8e54da6b2daaafcf408bb',
       individual_note: true,
       notes: [
@@ -31,7 +32,7 @@ describe('MergeRequest', () => {
       ],
     };
 
-    const multipleNoteDiscussion = {
+    const multipleNoteDiscussion: GitlabDiscussion = {
       id: '89d487e7367df85e4b577983d42c134000337dec',
       individual_note: false,
       notes: [

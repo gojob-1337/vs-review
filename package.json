@@ -5,7 +5,8 @@
   "version": "0.0.1",
   "main": "./extension/out/extension.js",
   "activationEvents": [
-    "onCommand:extension.helloWorld"
+    "onCommand:vsr.start",
+    "onCommand:vsr.merge-request.show"
   ],
   "engines": {
     "vscode": "^1.33.0"
@@ -13,13 +14,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.helloWorld",
-        "title": "Hello World"
+        "command": "vsr.start",
+        "title": "Start VS Review"
+      },
+      {
+        "command": "vsr.merge-request.show",
+        "title": "VSR MergeRequest"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "cd extension && yarn run compile",
     "postinstall": "cd extension && node ./node_modules/vscode/bin/install"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }
